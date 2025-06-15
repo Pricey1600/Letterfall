@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TileSlot : MonoBehaviour, ITileDropArea
 {
-    private char letterValue;
+    public char letterValue;
     public bool holdingTile = false;
     public GameObject currentTile;
     public void OnTileDrop(LetterTile tile) //what to do when a Letter Tile is dropped on the slot

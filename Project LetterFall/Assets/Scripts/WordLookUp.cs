@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor;
+using System.IO;
 
 public class WordLookUp : MonoBehaviour
 {
@@ -9,48 +11,63 @@ public class WordLookUp : MonoBehaviour
     public TextMeshProUGUI output;
 
     private string[] words;
-    private string dictString;
 
-    public PointsManager pointsManager;
+    //public PointsManager pointsManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        dictString = dictionaryTextFile.text;
+        string path = AssetDatabase.GetAssetPath(dictionaryTextFile);
+        words = File.ReadAllLines(path);
 
-        words = dictString.Split('\n');
-
-        //Debug.Log(words[1]);
+        Debug.Log("The number of available words: " + words.Length);
+        Debug.Log("Words such as: "+words[30364]);
 
     }
 
-    public void checkWord()
+    public bool checkWord(string userWord)
     {
-        Debug.Log("User Word: " + userInput.text);
+        //Debug.Log("User Word: " + userInput.text);
         //Debug.Log(words.Length);
-        if (checkDictionary(userInput.text.ToLower()))
+        //Debug.Log("Checking Word: "+userWord.ToLower());
+        if (checkDictionary(userWord.ToLower()))
         {
             output.text = "Valid";
-            pointsManager.addPoints(1);
+            //pointsManager.addPoints(1);
+            return true;
         }
         else
         {
             output.text = "INVALID";
+            return false;
         }
         
     }
 
-    private bool checkDictionary(string userWord)
+    private bool checkDictionary(string word)
     {
         foreach (string str in words)
         {
-            if (str.Contains(userWord))
+            if (str == word)
             {
+                Debug.Log("Checking word: " + str);
                 return true;
             }
         }
+        Debug.Log("NO MATCHES FOUND");
         return false;
-        
+        //Debug.Log("words array size: "+words.);
+        // Debug.Log(Array.Exists(words, el => el == word) +" "+ word);
+        // if (Array.Exists(words, el => el == word))
+        // {
+        //     return true;
+        // }
+        // else
+        // {
+        //     return false;
+        // }
+
+
     }
 
 }
