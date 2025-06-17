@@ -1,7 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.UI;
 
 public class LetterTile : MonoBehaviour, IDrag
 {
@@ -9,11 +7,11 @@ public class LetterTile : MonoBehaviour, IDrag
     private Collider2D col;
     private LayerMask dropMask;
 
-    public Vector2 startDragPos;
+    public Vector3 startDragPos;
 
     public char letter;
     public TMP_Text letterText;
-    public int pointsValue;
+    public int pointsValue; //not currently used
 
     private GameObject currentSlot;
 
@@ -21,24 +19,39 @@ public class LetterTile : MonoBehaviour, IDrag
     {
         col = GetComponent<Collider2D>();
         dropMask = ~LayerMask.GetMask("Draggable");
+    }
+    void Start()
+    {
+        
+        updateValues();
+        
+    }
+
+    public void updateValues()
+    {
         letterText.text = letter.ToString();
         startDragPos = transform.position;
     }
 
     public void onEndDrag() //what the tile wants to do when stopped being dragged
     {
+        if (transform.position.z <= Camera.main.transform.position.z)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, startDragPos.z);
+        }
 
         Collider2D hitCollider = Physics2D.OverlapPoint(transform.position, dropMask);
         col.enabled = true;
-        if (hitCollider != null && hitCollider.TryGetComponent(out ITileDropArea tileSlot))
+        if (hitCollider != null && hitCollider.TryGetComponent(out ITileDropArea tileSlot) && hitCollider.gameObject != currentSlot)
         {
             if (currentSlot != null)
             {
-                var currentDropArea = currentSlot.TryGetComponent(out ITileDropArea currentTileSlot);
+                currentSlot.TryGetComponent(out ITileDropArea currentTileSlot);
                 currentTileSlot.OnTileRemoved(this);
             }
             currentSlot = hitCollider.gameObject;
             tileSlot.OnTileDrop(this);
+            
         }
         else
         {
@@ -70,7 +83,13 @@ public class LetterTile : MonoBehaviour, IDrag
         {
             transform.position = startDragPos;
         }
-        
+
+    }
+
+    public void spawnAdjust(TileSlot spawnSlot)
+    {
+        currentSlot = spawnSlot.gameObject;
+        spawnSlot.OnTileDrop(this);
     }
     
 }

@@ -1,8 +1,6 @@
 using System.Collections;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class DragAndDrop : MonoBehaviour
 {
@@ -50,12 +48,12 @@ public class DragAndDrop : MonoBehaviour
         clickedObject.TryGetComponent<IDrag>(out var iDragComponent);
         iDragComponent?.onStartDrag();
 
-        float initialDistance = Vector3.Distance(clickedObject.transform.position, mainCamera.transform.position);
+        float initialDistance = Vector3.Distance(new Vector3(clickedObject.transform.position.x, clickedObject.transform.position.y, 0f), new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, 0f));
         while (mouseClick.ReadValue<float>() != 0)
         {
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-            clickedObject.transform.position = Vector3.SmoothDamp(clickedObject.transform.position, ray.GetPoint(initialDistance), ref velocity, mouseDragSpeed);
+            clickedObject.transform.position = Vector3.SmoothDamp(clickedObject.transform.position, new Vector3(ray.GetPoint(initialDistance).x, ray.GetPoint(initialDistance).y, clickedObject.transform.position.z), ref velocity, mouseDragSpeed);
             yield return null;
         }
         iDragComponent?.onEndDrag();
