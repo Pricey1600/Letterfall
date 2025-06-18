@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class TileSlot : MonoBehaviour, ITileDropArea
 {
@@ -8,6 +9,29 @@ public class TileSlot : MonoBehaviour, ITileDropArea
     public GameObject currentTile;
 
     public GameObject tilePrefab;
+    
+    public List<Sprite> slotSprites = new List<Sprite>();
+    private SpriteRenderer spriteRenderer;
+
+    void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (slotSprites.Count > 0)
+        {
+            Sprite tileBG = slotSprites[UnityEngine.Random.Range(0, slotSprites.Count)];
+            spriteRenderer.sprite = tileBG;
+            if (UnityEngine.Random.Range(0, 2) == 1)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else
+            {
+                spriteRenderer.flipX = true;
+            }
+            
+        }
+    }
     public void OnTileDrop(LetterTile tile) //what to do when a Letter Tile is dropped on the slot
     {
         if (currentTile != null)
@@ -22,7 +46,7 @@ public class TileSlot : MonoBehaviour, ITileDropArea
                 letterTile.onSwapped(tile.startDragPos); //swap positions with new tile
             }
         }
-        
+
 
         if (!reusableTiles)
         {

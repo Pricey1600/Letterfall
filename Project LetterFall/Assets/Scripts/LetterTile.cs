@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -15,10 +16,29 @@ public class LetterTile : MonoBehaviour, IDrag
 
     private GameObject currentSlot;
 
+    public List<Sprite> tileSprites = new List<Sprite>();
+    private SpriteRenderer spriteRenderer;
+
     void Awake()
     {
         col = GetComponent<Collider2D>();
         dropMask = ~LayerMask.GetMask("Draggable");
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (tileSprites.Count > 0)
+        {
+            Sprite tileBG = tileSprites[Random.Range(0, tileSprites.Count)];
+            spriteRenderer.sprite = tileBG;
+            if (Random.Range(0, 2) == 1)
+            {
+                spriteRenderer.flipX = false;
+            }
+            else
+            {
+                spriteRenderer.flipX = true;
+            }
+            
+        }
     }
     void Start()
     {
