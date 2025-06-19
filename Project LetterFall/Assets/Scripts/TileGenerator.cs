@@ -42,10 +42,11 @@ public class TileGenerator : MonoBehaviour
             newWordTiles.Add(newSlot);
             newSlot.transform.parent = newWordGrid.transform;
 
-            yield return new WaitForSeconds(spawnDelay);
+            //yield return new WaitForSeconds(spawnDelay);
         }
 
         sendNewTiles();
+        yield return null;
     }
 
     public void sendNewTiles()
@@ -69,9 +70,10 @@ public class TileGenerator : MonoBehaviour
             tileScript.spawnTile();
 
 
-            yield return new WaitForSeconds(spawnDelay);
+            //yield return new WaitForSeconds(spawnDelay);
         }
         GM.oldWordSlots = startingWordTiles;
+        yield return null;
     }
 
     

@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private string submittedWord;
     public List<string> usedWords = new List<string>();
 
+    public GameObject gameOverPanel;
+
     void Awake()
     {
         tileGenerator = GetComponent<TileGenerator>();
@@ -26,8 +28,13 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        BeginGame();
+    }
+
+    void BeginGame(){
         StartCoroutine(tileGenerator.GenerateNewSlots(20));
         StartCoroutine(tileGenerator.GenerateStartingSlots());
+        gameOverPanel.SetActive(false);
         //timer.resetTimer();
     }
 
@@ -90,8 +97,8 @@ public class GameManager : MonoBehaviour
                     Destroy(child.gameObject);
                 }
             }
-            yield return new WaitForSeconds(tileGenerator.spawnDelay);
-            
+            //yield return new WaitForSeconds(tileGenerator.spawnDelay);
+            yield return null;
         }
         foreach (GameObject slot in newWordSlots)
         {
@@ -112,7 +119,8 @@ public class GameManager : MonoBehaviour
                 {
                     Destroy(slot);
                 }
-                yield return new WaitForSeconds(wordMoveDelay);
+                //yield return new WaitForSeconds(wordMoveDelay);
+                yield return null;
             }
         }
 
@@ -150,8 +158,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void gameOver()
+    public void gameOver()
     {
+        gameOverPanel.SetActive(true);
         Debug.Log("TIME HAS RUN OUT");
     }
 }

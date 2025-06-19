@@ -42,5 +42,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Midground Sprites
+    uniqueID: 1937015197
+    locked: 0
+  - name: Foreground Sprites
+    uniqueID: 1248511113
+    locked: 0
+  - name: UI
+    uniqueID: 1039072587
+    locked: 0
   m_RenderingLayers:
   - Default
