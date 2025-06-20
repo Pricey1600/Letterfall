@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Timer : MonoBehaviour
 {
@@ -9,19 +10,23 @@ public class Timer : MonoBehaviour
     [SerializeField] private float turnTimeRemaining = 0f; //the timer itself
 
     public Slider timerSlider;
+    public TextMeshProUGUI timerText;
 
     private bool timerRunning = false;
 
     private bool pauseTimer;
 
+    private string timerTextStart = "0:";
+
     void Start()
     {
-        timerSlider.maxValue = turnTime;
+        //timerSlider.maxValue = turnTime;
     }
     public void resetTimer()
     {
         turnTimeRemaining = turnTime;
-        timerSlider.maxValue = turnTime;
+        //timerSlider.maxValue = turnTime;
+        timerText.text = timerTextStart + turnTime.ToString();
     }
 
     public void toggleTimer()
@@ -31,7 +36,8 @@ public class Timer : MonoBehaviour
 
     void Update()
     {
-        timerSlider.value = turnTimeRemaining;
+        //timerSlider.value = turnTimeRemaining;
+        timerText.text = timerTextStart + Mathf.FloorToInt(turnTimeRemaining).ToString();
         if (pauseTimer)
         {
             return;
