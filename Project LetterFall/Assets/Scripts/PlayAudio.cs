@@ -11,9 +11,17 @@ public class PlayAudio : MonoBehaviour
 
     private void Start()
     {
-        GM = GameObject.Find("Game Manager").GetComponent<GameManager>();
-        AS = GM.gameObject.GetComponent<AudioSource>();
-        ASPitchDefault = AS.pitch;
+        if (GameObject.Find("Game Manager"))
+        {
+            GM = GameObject.Find("Game Manager").GetComponent<GameManager>();
+            AS = GM.gameObject.GetComponent<AudioSource>();
+            ASPitchDefault = AS.pitch;
+        }
+        else if (GameObject.Find("MainMenuManager"))
+        {
+            AS = GameObject.Find("MainMenuManager").GetComponent<AudioSource>();
+            ASPitchDefault = AS.pitch;
+        }
     }
 
     public void playAudio()
