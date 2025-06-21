@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private WordLookUp wordLookUp;
     private PointsManager pointsManager;
     private Timer timer;
+    private TutorialManager tutorialManager;
     public List<GameObject> newWordSlots = new List<GameObject>();
     public List<GameObject> oldWordSlots = new List<GameObject>();
     public GameObject oldWordGrid;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
         wordLookUp = GetComponent<WordLookUp>();
         pointsManager = GetComponent<PointsManager>();
         timer = GetComponent<Timer>();
+        tutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
     }
     void Start()
     {
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(tileGenerator.GenerateStartingSlots());
         gameOverPanel.SetActive(false);
         //timer.resetTimer();
+        tutorialManager.progressTutorial();
     }
 
     void OnEnable()
@@ -83,6 +86,7 @@ public class GameManager : MonoBehaviour
                         }
                     }
                 }
+                tutorialManager.progressTutorial();
                 boardsParent.GetComponent<Animator>().SetBool("turn_change", true);
                 // timer.resetTimer();
                 // timer.toggleTimer();
@@ -168,6 +172,7 @@ public class GameManager : MonoBehaviour
         submittedWord = ""; //reset string
         timer.resetTimer();
         timer.toggleTimer();
+        tutorialManager.progressTutorial();
     }
 
     void toggleTiles(bool state)
