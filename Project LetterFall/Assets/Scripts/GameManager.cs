@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -31,7 +32,8 @@ public class GameManager : MonoBehaviour
         BeginGame();
     }
 
-    void BeginGame(){
+    void BeginGame()
+    {
         StartCoroutine(tileGenerator.GenerateNewSlots(20));
         StartCoroutine(tileGenerator.GenerateStartingSlots());
         gameOverPanel.SetActive(false);
@@ -175,7 +177,7 @@ public class GameManager : MonoBehaviour
             {
                 tile.GetComponent<Collider2D>().enabled = true;
             }
-            
+
         }
     }
 
@@ -183,5 +185,10 @@ public class GameManager : MonoBehaviour
     {
         gameOverPanel.SetActive(true);
         Debug.Log("TIME HAS RUN OUT");
+    }
+
+    public void loadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }
