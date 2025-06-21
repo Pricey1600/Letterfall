@@ -79,7 +79,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1248511113
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3845429100993572883
@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 1874336974965807999}
   - component: {fileID: 5278191997145203446}
   - component: {fileID: 825573964224633175}
+  - component: {fileID: 4098513252007009950}
   m_Layer: 6
   m_Name: LetterTile
   m_TagString: Untagged
@@ -253,7 +254,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1248511113
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d3b21fd3fca5b0a478b88a46165475f4, type: 3}
   m_Color: {r: 0.89411765, g: 0.7019608, b: 0.48235294, a: 1}
@@ -332,3 +333,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &4098513252007009950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8342399990100957729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073e4b06bb3bcc24e98c74b99fca853c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 1c6918755605dfd43ad19506a031f6f3, type: 3}

@@ -18,6 +18,7 @@ public class LetterTile : MonoBehaviour, IDrag
 
     public List<Sprite> tileSprites = new List<Sprite>();
     private SpriteRenderer spriteRenderer;
+    private PlayAudio audioScript;
 
     void Awake()
     {
@@ -37,8 +38,9 @@ public class LetterTile : MonoBehaviour, IDrag
             {
                 spriteRenderer.flipX = true;
             }
-            
+
         }
+        audioScript = GetComponent<PlayAudio>();
     }
     void Start()
     {
@@ -71,12 +73,13 @@ public class LetterTile : MonoBehaviour, IDrag
             }
             currentSlot = hitCollider.gameObject;
             tileSlot.OnTileDrop(this);
-            
+
         }
         else
         {
             transform.position = startDragPos;
         }
+        audioScript.playAudio();
 
     }
 
@@ -84,6 +87,7 @@ public class LetterTile : MonoBehaviour, IDrag
     {
         col.enabled = false;
         startDragPos = transform.position;
+        audioScript.playAudio();
     }
 
     public void onSwapped(Vector2 swapPos)

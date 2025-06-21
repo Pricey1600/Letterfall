@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class AnimatedObject : MonoBehaviour
 {
     private Animator AC;
     private GameManager GM;
+    
 
     public bool movingTiles = false;
 
@@ -28,6 +30,8 @@ public class AnimatedObject : MonoBehaviour
             movingTiles = false;
         }
     }
+
+    
 
     
     

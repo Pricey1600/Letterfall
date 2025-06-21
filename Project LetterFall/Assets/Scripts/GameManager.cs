@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.Log("NO MORE WORDS CAN BE MADE");
+                gameOver();
             }
 
         }
