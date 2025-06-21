@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     private string submittedWord;
     public List<string> usedWords = new List<string>();
 
-    public GameObject gameOverPanel;
+    public GameObject gameOverPanel, boardsParent;
 
     void Awake()
     {
@@ -70,18 +70,36 @@ public class GameManager : MonoBehaviour
             usedWords.Add(submittedWord);
             if (submittedWord.Length > 1)
             {
-                StartCoroutine(moveWord(submittedWord.Length)); //move word to be used in letter bank
-                timer.resetTimer();
-                timer.toggleTimer();
+                foreach (GameObject slot in newWordSlots)
+                {
+                    slot.TryGetComponent(out TileSlot slotScript);
+                    if (slotScript != null)
+                    {
+                        if (slot.GetComponent<TileSlot>().holdingTile)
+                        {
+                            slotScript.currentTile.transform.parent = slot.transform;
+                        }
+                    }
+                }
+                boardsParent.GetComponent<Animator>().SetBool("turn_change", true);
+                // timer.resetTimer();
+                // timer.toggleTimer();
             }
             else
             {
                 Debug.Log("NO MORE WORDS CAN BE MADE");
             }
-            
-        }
 
-        submittedWord = ""; //reset string
+        }
+        else
+        {
+            submittedWord = ""; //reset string
+        }
+    }
+
+    public void invokeMove()
+    {
+        StartCoroutine(moveWord(submittedWord.Length)); //move word to be used in letter bank
     }
 
     IEnumerator moveWord(int wordLength)
@@ -90,7 +108,7 @@ public class GameManager : MonoBehaviour
         {
             if (slot != null)
             {
-                slot.GetComponent<SpriteRenderer>().enabled = false;
+                //slot.GetComponent<SpriteRenderer>().enabled = false;
                 foreach (Transform child in slot.transform)
                 {
                     letterTiles.Remove(child.gameObject);
@@ -102,7 +120,7 @@ public class GameManager : MonoBehaviour
         }
         foreach (GameObject slot in newWordSlots)
         {
-            TileSlot slotScript = slot.GetComponent<TileSlot>();
+            slot.TryGetComponent(out TileSlot slotScript);
             if (slotScript != null)
             {
                 if (slot.GetComponent<TileSlot>().holdingTile)
@@ -144,6 +162,9 @@ public class GameManager : MonoBehaviour
         newWordSlots.Clear();
         StartCoroutine(tileGenerator.GenerateNewSlots(wordLength));
         toggleTiles(true);
+        submittedWord = ""; //reset string
+        timer.resetTimer();
+        timer.toggleTimer();
     }
 
     void toggleTiles(bool state)

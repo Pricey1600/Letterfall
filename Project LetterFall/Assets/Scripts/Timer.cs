@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private float turnTimeRemaining = 0f; //the timer itself
 
     public Slider timerSlider;
-    public TextMeshProUGUI timerText;
+    public TextMeshPro timerText;
 
     private bool timerRunning = false;
 

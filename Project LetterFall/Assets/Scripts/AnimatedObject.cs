@@ -4,34 +4,31 @@ using System.Collections.Generic;
 
 public class AnimatedObject : MonoBehaviour
 {
-    public delegate void AnimationAction();
-    public static event AnimationAction Ready;
-
     private Animator AC;
+    private GameManager GM;
 
-    private void Awake() {
-       AC = GetComponent<Animator>();
-    }
+    public bool movingTiles = false;
 
-    void OnEnable()
+    private void Awake()
     {
-        //GameManager.turnOver += animationStart;
-        //GameManager.turnStart += animationEnd;
+        AC = GetComponent<Animator>();
+        GM = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
-    void OnDisable()
+
+    public void moveTiles()
     {
-        //GameManager.turnOver -= animationStart;
-        //GameManager.turnStart -= animationEnd;
+        if (!movingTiles)
+        {
+            movingTiles = true;
+            GM.invokeMove();
+            AC.SetBool("turn_change", false);
+        }
+        else
+        {
+            movingTiles = false;
+        }
     }
 
-    private void animationStart(){
-        AC.SetBool("changing_turn", true);
-    }
-    private void animationEnd(){
-        AC.SetBool("changing_turn", false);
-    }
-
-    public void ready(){
-        Ready();
-    }
+    
+    
 }

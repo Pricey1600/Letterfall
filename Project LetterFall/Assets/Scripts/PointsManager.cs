@@ -4,7 +4,8 @@ using TMPro;
 public class PointsManager : MonoBehaviour
 {
     public int playerScore;
-    public TextMeshProUGUI scoreText, gameOverScoreText;
+    public TextMeshPro scoreText;
+    public TextMeshProUGUI gameOverScoreText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void addPoints(int points)
