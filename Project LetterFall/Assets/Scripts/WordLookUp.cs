@@ -5,12 +5,13 @@ using System.IO;
 using System.Linq;
 using System;
 using NUnit.Framework;
+using System.Text.RegularExpressions;
 
 public class WordLookUp : MonoBehaviour
 {
     public TextAsset dictionaryTextFile;
     public TMP_InputField userInput;
-    public TextMeshProUGUI output;
+    //public TextMeshProUGUI output;
 
     private string[] words = { };
 
@@ -21,7 +22,15 @@ public class WordLookUp : MonoBehaviour
     {
         dictionaryTextFile = Resources.Load("wordsAlpha") as TextAsset;
         Debug.Log("Words File Name: " + dictionaryTextFile.name);
-        words = dictionaryTextFile.text.Split(Environment.NewLine.ToCharArray());
+        //Debug.Log("NewLine Char: " + Environment.NewLine.ToCharArray()[0]);
+        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            words = dictionaryTextFile.text.Split(Environment.NewLine.ToCharArray());
+        }
+        else if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            words = dictionaryTextFile.text.Split("\r\n");
+        }
 
         Debug.Log("The number of available words: " + words.Length);
         Debug.Log("Words such as: " + words[30364]);
@@ -38,13 +47,13 @@ public class WordLookUp : MonoBehaviour
         Debug.Log("User Word Type: " + userWord.GetType());
         if (checkDictionary(userWord.ToLower()))
         {
-            output.text = "Valid";
+            //output.text = "Valid";
             //pointsManager.addPoints(1);
             return true;
         }
         else
         {
-            output.text = "INVALID";
+            //output.text = "INVALID";
             return false;
         }
         
@@ -57,7 +66,7 @@ public class WordLookUp : MonoBehaviour
             Debug.Log("WORD FOUND");
             return true;
         }
-        
+
         Debug.Log("WORD NOT FOUND");
         return false;
 

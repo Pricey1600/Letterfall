@@ -34,7 +34,11 @@ public class MainMenuManager : MonoBehaviour
     }
     public void quitGame()
     {
-        Application.Quit();
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
+        {
+            Application.Quit();
+        }
+        
     }
 
     public void toggleOptions()
