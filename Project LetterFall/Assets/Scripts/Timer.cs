@@ -50,6 +50,7 @@ public class Timer : MonoBehaviour
 
         if (turnTimeRemaining <= 0f && timerRunning)
         {
+            turnTimeRemaining = 0;
             timerRunning = false;
             OnTimeOut();
         }

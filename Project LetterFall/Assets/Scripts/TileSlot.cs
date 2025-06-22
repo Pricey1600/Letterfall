@@ -52,6 +52,7 @@ public class TileSlot : MonoBehaviour, ITileDropArea
         {
             currentTile = tile.gameObject;
             tile.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.5f);
+            tile.transform.parent = this.transform;
             Debug.Log("Card dropped here");
             letterValue = tile.GetComponent<LetterTile>().letter;
             Debug.Log("Letter Value set to " + letterValue);

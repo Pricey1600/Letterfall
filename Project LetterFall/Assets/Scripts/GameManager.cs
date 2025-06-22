@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public List<string> usedWords = new List<string>();
 
     public GameObject gameOverPanel, boardsParent;
+    private Animator boardsAC;
 
     void Awake()
     {
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
         pointsManager = GetComponent<PointsManager>();
         timer = GetComponent<Timer>();
         tutorialManager = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        boardsAC = boardsParent.GetComponent<Animator>();
     }
     void Start()
     {
@@ -64,9 +66,16 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("Submitted Word: " + submittedWord);
 
+        if (submittedWord == "" || submittedWord == null)
+        {
+            return;
+        }
+
         if (usedWords.Contains(submittedWord))
         {
             Debug.Log("Word Already Used: " + submittedWord);
+            submittedWord = ""; //reset string
+            boardsAC.SetTrigger("no_word"); //negative feedback
         }
         else if (wordLookUp.checkWord(submittedWord))
         {
@@ -87,7 +96,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 tutorialManager.progressTutorial();
-                boardsParent.GetComponent<Animator>().SetBool("turn_change", true);
+                boardsAC.SetBool("turn_change", true);
                 // timer.resetTimer();
                 // timer.toggleTimer();
             }
@@ -101,6 +110,7 @@ public class GameManager : MonoBehaviour
         else
         {
             submittedWord = ""; //reset string
+            boardsAC.SetTrigger("no_word"); //negative feedback
         }
     }
 

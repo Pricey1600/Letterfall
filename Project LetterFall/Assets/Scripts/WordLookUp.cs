@@ -23,11 +23,11 @@ public class WordLookUp : MonoBehaviour
         dictionaryTextFile = Resources.Load("wordsAlpha") as TextAsset;
         Debug.Log("Words File Name: " + dictionaryTextFile.name);
         //Debug.Log("NewLine Char: " + Environment.NewLine.ToCharArray()[0]);
-        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
+        if (Application.platform != RuntimePlatform.WebGLPlayer)
         {
             words = dictionaryTextFile.text.Split(Environment.NewLine.ToCharArray());
         }
-        else if (Application.platform == RuntimePlatform.WebGLPlayer)
+        else
         {
             words = dictionaryTextFile.text.Split("\r\n");
         }
