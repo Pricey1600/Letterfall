@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using System.Collections;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class MainMenuManager : MonoBehaviour
 
     public AudioMixer gameMixer;
     public Slider musicSlider, SFXSlider;
+
+    public Animator transitionAC;
+    public float transitionTime = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,17 +32,27 @@ public class MainMenuManager : MonoBehaviour
         setSFXVolume();
     }
 
-    public void loadScene(string scene)
+    public void loadScene(string sceneName)
     {
-        SceneManager.LoadScene(scene);
+        StartCoroutine(LoadScene(sceneName));
     }
+
+    IEnumerator LoadScene(string sceneName)
+    {
+        transitionAC.SetTrigger("start");
+
+        yield return new WaitForSeconds(transitionTime);
+
+        SceneManager.LoadScene(sceneName);
+    }
+
     public void quitGame()
     {
         if (Application.platform != RuntimePlatform.WebGLPlayer)
         {
             Application.Quit();
         }
-        
+
     }
 
     public void toggleOptions()

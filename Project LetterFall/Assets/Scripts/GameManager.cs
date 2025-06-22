@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel, boardsParent;
     private Animator boardsAC;
 
+    public Animator transitionAC;
+    public float transitionTime = 1f;
+
     void Awake()
     {
         tileGenerator = GetComponent<TileGenerator>();
@@ -205,6 +208,15 @@ public class GameManager : MonoBehaviour
 
     public void loadScene(string sceneName)
     {
+        StartCoroutine(LoadScene(sceneName));
+    }
+
+    IEnumerator LoadScene(string sceneName)
+    {
+        transitionAC.SetTrigger("start");
+
+        yield return new WaitForSeconds(transitionTime);
+
         SceneManager.LoadScene(sceneName);
     }
 }

@@ -7,7 +7,7 @@ public class PlayAudio : MonoBehaviour
     public AudioClip audioClip;
     private float ASPitchDefault;
 
-    private bool isPlaying = false, isPlayingReverse = false;
+    private bool isPlaying = false, isPlayingReverse = true;
 
     private void Start()
     {
